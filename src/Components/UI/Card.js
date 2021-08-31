@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
 const CardWrapper = styled.div`
-  width: 60rem;
-  height: 15rem;
-  background: #bbb;
+  /* max-width: 55rem; */
+  height: 100%;
+
   border-radius: 15px;
+
+  color: white;
 `;
 
-const Card = () => {
-  return <CardWrapper></CardWrapper>;
+const Card = (props) => {
+  const Classes = "card " + props.className;
+  return <CardWrapper className={Classes}>{props.children}</CardWrapper>;
 };
 
 export default Card;
