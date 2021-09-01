@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import CartContext from "../Store/cart-context";
 
 const MenuItemWrapper = styled.div`
   width: 70rem;
@@ -9,38 +10,31 @@ const MenuItemWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const MenuItem = ({ order }) => {
-  const [amount, setAmount] = useState(1);
-
-  const submitHandler = (event) => {
-    event.preventDefault();
-    if (amount > 0) {
-      order.orders = order.orders += +amount;
-      console.log(order.orders);
-    }
-
-    setAmount("1");
-  };
-
+const MenuItem = ({ order, onAdd }) => {
+  const [amount, setAmount] = useState(order.orders);
   return (
     <MenuItemWrapper>
       <div className="info">
-        <h3>{order.name}</h3>
+        <h3>{order.orders}</h3>
         <p>{order.description}</p>
         <p className="price"></p>
       </div>
 
-      <form className="addToCart" onSubmit={submitHandler}>
-        <label htmlFor="add">Amount </label>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => {
-            setAmount(e.target.value);
-          }}
-        ></input>
-        <button type="submit">add</button>
-      </form>
+      <label htmlFor="add">Amount </label>
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => {
+          setAmount(e.target.value);
+        }}
+      ></input>
+      <button
+        onClick={() => {
+          onAdd(order.key, amount);
+        }}
+      >
+        add
+      </button>
     </MenuItemWrapper>
   );
 };

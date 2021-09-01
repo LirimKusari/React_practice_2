@@ -1,10 +1,42 @@
 import styled, { createGlobalStyle } from "styled-components";
 import React, { useContext } from "react";
 import Card from "./Components/UI/Card";
-import MenuItem from "./Components/Menu/MenuItem";
+import Menu from "./Components/Menu/Menu";
 import MainHeader from "./Components/Header/MainHeader";
+import Cart from "./Components/Cart/Cart";
 
 import CartContext from "./Components/Store/cart-context";
+
+const data = [
+  {
+    name: "Roasted Chicken",
+    description: "Some black ass soul food",
+    orders: 0,
+    price: 15.3,
+    key: "Roasted Chicken",
+  },
+  {
+    name: "Schnitzel",
+    description: "A german speciality!",
+    orders: 0,
+    price: 16.5,
+    key: "Schnitzel",
+  },
+  {
+    name: "Sushi",
+    description: "Finest fish and veggies",
+    orders: 0,
+    price: 22.99,
+    key: "Sushi",
+  },
+  {
+    name: "Barbecue Burger",
+    description: "Grilled barbecue burger",
+    orders: 0,
+    price: 12.99,
+    key: "Barbecue Burger",
+  },
+];
 
 const Body = createGlobalStyle`
 body {
@@ -41,19 +73,9 @@ const AppWrapper = styled.div`
       font-size: 1.3rem;
     }
   }
-
-  .menu {
-    margin-top: 3rem;
-    margin-bottom: 4rem;
-    max-width: 70%;
-    background: white;
-  }
 `;
 
 function App() {
-  let cartContext = useContext(CartContext);
-  // cartContext = cartContext.orders;
-
   return (
     <AppWrapper>
       <Body />
@@ -71,11 +93,10 @@ function App() {
         </p>
       </Card>
 
-      <Card className="menu">
-        {cartContext.orders.map((order) => {
-          return <MenuItem order={order} key={order.key}></MenuItem>;
-        })}
-      </Card>
+      <CartContext.Provider value={data}>
+        <Menu></Menu>
+        <Cart></Cart>
+      </CartContext.Provider>
     </AppWrapper>
   );
 }
